@@ -1,0 +1,24 @@
+# --Data-structure-and-algorithms
+记录每天的算法学习
+
+
+    //希尔排序
+    public static void shellSort(int arr[]){
+        //希尔排序的第一轮排序
+        //因为第一轮排序，是将gap=length/2组
+        for (int gap = arr.length/2;gap>0;gap/=2) {
+            int temp = 0;
+            for (int i = gap; i < arr.length; i++) {
+                //遍历各组中所有的元素(共grp组，每组有分组后的元素个数)，步长gap
+                for (int j = i - gap; j >= 0; j -= gap) {
+                    //如果当前袁术大于加上步长后的那个元素，说明交换
+                    if (arr[j] > arr[j + gap]) {
+                        temp = arr[j];
+                        arr[j] = arr[j + gap];
+                        arr[j + gap] = temp;
+                    }
+                }
+            }
+        }
+        System.out.println("希尔排序"+Arrays.toString(arr));
+    }
