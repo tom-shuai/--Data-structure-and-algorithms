@@ -1,0 +1,48 @@
+# --Data-structure-and-algorithms
+记录每天的算法学习
+
+
+    public static void redixSort(int[] arr){
+        //第一轮排序(针对每个元素的个位进行排序处理)
+        //定义一个二维数组，表示10个桶,每个通就是一个一维数组
+        //为了防止当前所有数都属于一个桶的情况
+        //基数排序是使用空间换时间的经典算法
+        int[][] bucket = new int[10][arr.length];
+        //为了记录每个桶中实际存放了多少个数据，我们定义一个一维数组来记录各个桶每次放入的数据个数
+        //bucketElementCount[0],就是记录的bucket[0]桶的数据个数...
+        //先得到数组中最大的位数
+        int max=arr[0];//假设第一个数就是最大数
+        for (int i=0;i<arr.length;i++){
+            if (arr[i]>max){
+                max=arr[i];
+            }
+        }
+        //得到最大数是几位数
+        int maxLength=(max+"").length();
+        int [] bucketElementCount = new int[10];
+
+        for (int i =0,n=1;i<maxLength;i++,n*=10) {
+            for (int j = 0; j < arr.length; j++) {
+                //取出每个元素的数
+                int digitOfElement = arr[j] /n % 10;
+                //放入到对应的桶中
+                bucket[digitOfElement][bucketElementCount[digitOfElement]] = arr[j];
+                bucketElementCount[digitOfElement]++;
+            }
+            //按照桶的顺序，把数据放到原来的数组
+            int index = 0;
+            for (int k = 0; k < bucketElementCount.length; k++) {
+                //如果桶中有数据才放入到原数组
+                if (bucketElementCount[k] != 0) {//说明当前桶有数据
+                    //循环该桶即第k个桶
+                    for (int l = 0; l < bucketElementCount[k]; l++) {
+                        //取出元素到arr中
+                        arr[index++] = bucket[k][l];
+                    }
+                }
+                //每轮处理后需要将每个bucketElementCount[k] = 0
+                bucketElementCount[k] = 0;
+            }
+            //System.out.println("第"+(i+1)+"轮"+Arrays.toString(arr));
+        }
+    }
