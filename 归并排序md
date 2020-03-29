@@ -1,0 +1,46 @@
+# --Data-structure-and-algorithms
+记录每天的算法学习
+
+
+    //归并排序
+    public static void merge(int arr[],int left,int mid,int right,int temp[]){
+        int i =left;//初始化，左边有序序列得初始索引
+        int j =mid+1;//初始化j，右边有序序列得初始索引
+        int t = 0;//temp的初始索引
+
+        //先把左右两边有序的数据按照规则填充到temp数组
+        //指代左右两边的有序序列，有一边处理完毕为止
+        //把有剩余数据的一边的数据一次全部填充到temp
+        //将temp数组的元素拷贝到arr
+        while (i<=mid&&j<=right){
+            //如果左边的有序序列的当前元素,小于等于右边有序序列的当前元素，拷贝到temp，然后后移
+            if (arr[i]<=arr[j]){
+                temp[t]=arr[i];
+                t+=1;
+                i+=1;
+            }else {//反之将右边有序序列的当前元素填充到temp数组
+                temp[t]=arr[j];
+                t+=1;
+                j+=1;
+            }
+        }
+        while (i<=mid){//说明左边有序序列还有剩余的元素，那么直接填充到temp
+            temp[t]=arr[i];
+            t+=1;
+            i+=1;
+        }
+        while (j<=right){//说明右边有序序列还有剩余的元素，那么直接填充到temp
+            temp[t]=arr[j];
+            t+=1;
+            j+=1;
+        }
+        //拷贝到原始数组
+        t=0;
+        int tempLeft=left;
+        //System.out.println("tempLeft:"+tempLeft+"right:"+right);
+        while (tempLeft<=right){//最后一次拷贝templeft=0,right=arr.length-1;
+            arr[tempLeft] = temp[t];
+            t+=1;
+            tempLeft+=1;
+        }
+    }
